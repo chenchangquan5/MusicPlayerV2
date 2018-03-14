@@ -44,6 +44,8 @@ void MainWidget::initWidget(void)
 {
     this->setWindowFlags(Qt::FramelessWindowHint);
 
+    ui->pb_login->setText("未登录");
+
     //隐藏水平方向和垂直方向的滚动条
     ui->lw_songNameList->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->lw_songNameList->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -106,6 +108,7 @@ void MainWidget::on_pb_close_clicked()
 {
     emit signalCloseSettingsDialog();
     emit signalCloseTimingSettings();
+    emit signalCloseWidget();
     this->close();
 }
 
@@ -245,10 +248,23 @@ void MainWidget::on_pb_setting_clicked()
 
 void MainWidget::on_pb_mini_clicked()
 {
-    emit  signalNormalToMini();
+    emit signalNormalToMini();
 }
 
 void MainWidget::on_pb_login_clicked()
 {
     emit signalShowLogin();
 }
+
+void MainWidget::slotLoginSuccessToMainWidget(void)
+{
+    ui->pb_login->setText("已登录");
+}
+
+void MainWidget::slotLogoutToMainWidget(void)
+{
+    ui->pb_login->setText("未登录");
+}
+
+
+

@@ -14,6 +14,7 @@ PlayerLogic::PlayerLogic(QObject *parent) : QObject(parent)
     initPlayer();
     initLogin();
     initRegister();
+    initDownloadSongs();
 }
 
 PlayerLogic::~PlayerLogic()
@@ -45,6 +46,13 @@ void PlayerLogic::initMainWidget(void)
             this,SLOT(slotCustomContexMenuRequested(int,int)));
     connect(m_mainWidget,SIGNAL(signalShowLogin()),
             this,SLOT(slotShowLogin()));
+    connect(this,SIGNAL(signalLoginSuccessToMainWidget()),
+            m_mainWidget,SLOT(slotLoginSuccessToMainWidget()));
+    connect(this,SIGNAL(signalLogoutToMainWidget()),
+            m_mainWidget,SLOT(slotLogoutToMainWidget()));
+    connect(m_mainWidget,SIGNAL(signalCloseWidget()),
+            this,SLOT(slotCloseWidget()));
+
 }
 
 void PlayerLogic::showMainWidget(void)
@@ -151,16 +159,31 @@ void PlayerLogic::initMiniWidget(void)
             this,SLOT(slotMiniToNormal()));
     connect(m_miniWidget,SIGNAL(signalCustomContexMenuRequested(int,int)),
             this,SLOT(slotCustomContexMenuRequested(int,int)));
+    connect(m_miniWidget,SIGNAL(signalCloseWidget()),
+            this,SLOT(slotCloseWidget()));
 }
 
 void PlayerLogic::initLogin()
 {
     m_login = new Login;
+
+    connect(m_login,SIGNAL(signalLoginSuccess()),
+            this,SLOT(slotLoginSuccess()));
+    connect(m_login,SIGNAL(signalShowRegister()),
+            this,SLOT(slotShowRegister()));
 }
 
 void PlayerLogic::initRegister()
 {
     m_register = new Register;
+
+    connect(m_register,SIGNAL(signalShowLogin()),
+            this,SLOT(slotShowLogin()));
+}
+
+void PlayerLogic::initDownloadSongs()
+{
+    m_downloadSongs = new DownloadSongs;
 }
 
 void PlayerLogic::slotDurationChanged(qint64 duration)
@@ -333,6 +356,8 @@ void PlayerLogic::slotControlVolume(int volume)
 //显示设置界面
 void PlayerLogic::slotControlSetting()
 {
+    //设置为模态对话框
+    m_settingsDialog->setWindowModality(Qt::ApplicationModal);
     m_settingsDialog->show();
 }
 
@@ -368,8 +393,9 @@ void PlayerLogic::slotCustomContexMenuRequested(int pos_x, int pos_y)
     addMenuMode.addAction("随机播放");
     addMenuMode.setFont(QFont("Arial",13));
 
-    m_menu->addAction("注销");
-    m_menu->addSeparator();
+    m_menu->addAction("注销",this,SLOT(slotLogout()));
+    m_menu->addSeparator();  //分隔符
+    m_menu->addAction("下载歌曲",this,SLOT(slotShowDownloadSongs()));
     m_menu->addMenu(&addSong);
     m_menu->addMenu(&addMenuMode);
     m_menu->addAction("定时设置",this,SLOT(slotShowTimingSettings()));
@@ -387,12 +413,11 @@ void PlayerLogic::slotCustomContexMenuRequested(int pos_x, int pos_y)
 void PlayerLogic::slotCloseWidget(void)
 {
     m_mainWidget->close();
-    m_timingSettings->close();
 }
 
 void PlayerLogic::slotShowTimingSettings(void)
 {
-    m_timingSettings->show();
+    m_settingsDialog->exec();
 }
 
 //定时停止播放
@@ -407,11 +432,34 @@ void PlayerLogic::slotTimingSettingsToTimingPlay(void)
     m_player->play();
 }
 
-//跳转到登陆界面
-void PlayerLogic::slotShowLogin()
+//显示登陆界面
+void PlayerLogic::slotShowLogin(void)
 {
-    m_login->close();
+    //设置为模态对话框
+    m_login->setWindowModality(Qt::ApplicationModal);
     m_login->show();
+}
 
-    m_register->close();
+//显示注册界面
+void PlayerLogic::slotShowRegister(void)
+{
+    m_register->setWindowModality(Qt::ApplicationModal);
+    m_register->show();
+}
+
+//显示下载界面
+void PlayerLogic::slotShowDownloadSongs(void)
+{
+    m_downloadSongs->setWindowModality(Qt::ApplicationModal);
+    m_downloadSongs->show();
+}
+
+void PlayerLogic::slotLoginSuccess(void)
+{
+    emit signalLoginSuccessToMainWidget();
+}
+
+void PlayerLogic::slotLogout(void)
+{
+    emit signalLogoutToMainWidget();
 }

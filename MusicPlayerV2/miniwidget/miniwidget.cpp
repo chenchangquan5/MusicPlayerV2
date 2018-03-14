@@ -65,6 +65,7 @@ void MiniWidget::on_pb_close_clicked()
 {
     emit signalCloseSettingsDialog();
     emit signalCloseTimingSettings();
+    emit signalCloseWidget();
     this->close();
 }
 

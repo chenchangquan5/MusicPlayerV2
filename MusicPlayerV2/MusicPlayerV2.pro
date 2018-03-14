@@ -28,6 +28,7 @@ include(mainmenu/mainmenu.pri)
 include(widgets/widgets.pri)
 include(miniwidget/miniwidget.pri)
 include(wlogin/wlogin.pri)
+include(downloadsongs/downloadsongs.pri)
 
 SOURCES += main.cpp\
     playerlogic.cpp

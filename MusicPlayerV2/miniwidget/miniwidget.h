@@ -23,6 +23,7 @@ signals:
     void signalCustomContexMenuRequested(int pos_x, int pos_y);
     void signalCloseSettingsDialog(void);
     void signalCloseTimingSettings(void);
+    void signalCloseWidget(void);
 
 public:
     explicit MiniWidget(QWidget *parent = 0);
