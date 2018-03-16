@@ -13,6 +13,8 @@
 #include "timingsettings.h"
 #include "login.h"
 #include "register.h"
+#include "downloadsongs.h"
+#include "client.h"
 
 
 class PlayerLogic : public QObject
@@ -38,6 +40,10 @@ public slots:
     void slotTimingSettingsToTimingStop(void);
     void slotTimingSettingsToTimingPlay(void);
     void slotShowLogin(void);
+    void slotShowRegister(void);
+    void slotShowDownloadSongs(void);
+    void slotLoginSuccess(void);
+    void slotLogout(void);
 
 public:
     explicit PlayerLogic(QObject *parent = 0);
@@ -46,6 +52,9 @@ public:
     void showMainWidget(void);
 
 signals:
+    void signalLoginSuccessToMainWidget(void);
+    void signalLogoutToMainWidget(void);
+    void signalSendMsg(void);
 
 private slots:
     void slotCurrentIndexChanged(int position);
@@ -96,6 +105,14 @@ private:
     //初始化注册界面
     Register *m_register;
     void initRegister(void);
+
+    //初始化下载界面
+    DownloadSongs *m_downloadSongs;
+    void initDownloadSongs(void);
+
+    //
+    Client *m_client;
+    void initClient(void);
 };
 
 #endif // PLAYERLOGIC_H

@@ -27,6 +27,11 @@ signals:
     void signalCloseSettingsDialog(void);
     void signalCloseTimingSettings(void);
     void signalShowLogin(void);
+    void signalCloseWidget(void);
+
+public slots:
+    void slotLoginSuccessToMainWidget(void);
+    void slotLogoutToMainWidget(void);
 
 public:
     explicit MainWidget(QWidget *parent = 0);
@@ -42,6 +47,8 @@ public:
     void setWidgetCurrentSongTotalTime(quint64 time);
     void setWidgetCurrentSongLyricList(QStringList list);
     void setWidgetCurrentLyricPlayRowShow(quint64 index);
+
+    static void loginSuccess(QString name);
 
 protected:   
     void mousePressEvent(QMouseEvent *ev); //鼠标按下

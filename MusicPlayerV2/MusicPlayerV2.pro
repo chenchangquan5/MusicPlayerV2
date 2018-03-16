@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui multimedia sql
+QT       += core gui multimedia sql network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -28,6 +28,7 @@ include(mainmenu/mainmenu.pri)
 include(widgets/widgets.pri)
 include(miniwidget/miniwidget.pri)
 include(wlogin/wlogin.pri)
+include(downloadsongs/downloadsongs.pri)
 
 SOURCES += main.cpp\
     playerlogic.cpp

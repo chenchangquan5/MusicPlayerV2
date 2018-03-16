@@ -110,10 +110,10 @@ void TimingPlay::playTotalTimeMinute(void)
             }
         }
 
-        qDebug() << totalHour << " " << totalMinute;
+        qDebug() << totalHour << "小时 " << totalMinute << "分钟";
 
         totalTimeMinute = totalHour*60 + totalMinute; //以分钟为单位，相差的时间
-        qDebug() << totalTimeMinute;
+        qDebug() << totalTimeMinute << "分钟";
 
         //单触发定时器
         QTimer::singleShot(totalTimeMinute*60*1000, this, SLOT(updateCaption()));

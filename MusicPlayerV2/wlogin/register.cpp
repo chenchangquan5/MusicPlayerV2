@@ -24,7 +24,6 @@ Register::~Register()
 void Register::initWindow()
 {
     this->setWindowFlags(Qt::FramelessWindowHint);
-//    this->setWindowFlag(Qt::WindowStaysOnTopHint);
 
     //暗注释
     ui->le_id->setPlaceholderText(tr("请输入手机号或邮箱"));
@@ -104,19 +103,19 @@ void Register::on_pb_register_clicked()
 
 void Register::on_pb_close_clicked()
 {
-    this->close();
-
     ui->le_id->clear();
     ui->le_pswd->clear();
+
+    this->close();  
 }
 
 void Register::on_pb_return_clicked()
 {
-    this->close();
-    emit signalShowLogin();
-
     ui->le_id->clear();
     ui->le_pswd->clear();
+
+    this->hide();
+    emit signalShowLogin();  
 }
 
 //当按下鼠标左键时，获取主窗体左上角的位置
