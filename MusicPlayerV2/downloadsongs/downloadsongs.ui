@@ -13,19 +13,7 @@
   <property name="windowTitle">
    <string>DownloadSongs</string>
   </property>
-  <widget class="QListWidget" name="lw_songNL">
-   <property name="geometry">
-    <rect>
-     <x>100</x>
-     <y>10</y>
-     <width>291</width>
-     <height>281</height>
-    </rect>
-   </property>
-   <property name="contextMenuPolicy">
-    <enum>Qt::CustomContextMenu</enum>
-   </property>
-  </widget>
+
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
