@@ -10,6 +10,8 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    this->setWindowFlags(Qt::FramelessWindowHint);
+
     m_initPath = "./../MusicPlayerV2/config.ini";
 
     read("Path", "SongPath", m_songPath);
@@ -48,6 +50,24 @@ void SettingsDialog::on_pb_save_clicked()
 
     write("Path", "SongPath", ui->le_songPath->text());
     write("Path", "LyricPath", ui->le_lyricPath->text());
+}
+
+void SettingsDialog::mousePressEvent(QMouseEvent *ev)
+{
+    if(ev->buttons() == Qt::LeftButton)
+    {
+        m_widgetMove = ev->globalPos() - this->frameGeometry().topLeft();
+        ev->accept();
+    }
+}
+
+void SettingsDialog::mouseMoveEvent(QMouseEvent *ev)
+{
+    if(ev->buttons() == Qt::LeftButton)
+    {
+        this->move(ev->globalPos() - m_widgetMove);
+        ev->accept();
+    }
 }
 
 bool SettingsDialog::write(QString group, QString key, QString value)
@@ -91,4 +111,9 @@ QString SettingsDialog::getSongPath(void) const
 QString SettingsDialog::getLyricPath(void) const
 {
     return m_lyricPath;
+}
+
+void SettingsDialog::on_pb_close_clicked()
+{
+    this->close();
 }

@@ -14,11 +14,6 @@ Login::Login(QWidget *parent) :
 {
     ui->setupUi(this);
     initWindow();
-
-    m_register = new Register;
-
-    connect(m_register, SIGNAL(signalShowLogin()),
-            this,SLOT(slotShowLogin()));
 }
 
 Login::~Login()
@@ -106,6 +101,8 @@ void Login::on_pb_enter_clicked()
         {
             this->hide();
 
+            emit signalLoginSuccess();
+
             QMessageBox msgBox;
             msgBox.setText("登录成功！");
             msgBox.exec();
@@ -148,12 +145,7 @@ void Login::on_pb_register_clicked()
     ui->le_pswd->clear();
 
     this->hide();
-    m_register->show();
-}
-
-void Login::slotShowLogin()
-{
-    this->show();
+    emit signalShowRegister();
 }
 
 void Login::on_pb_close_clicked()
