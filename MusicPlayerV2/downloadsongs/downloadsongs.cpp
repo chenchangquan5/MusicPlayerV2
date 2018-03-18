@@ -6,9 +6,11 @@ DownloadSongs::DownloadSongs(QWidget *parent) :
     ui(new Ui::DownloadSongs)
 {
     ui->setupUi(this);
+
 }
 
 DownloadSongs::~DownloadSongs()
 {
     delete ui;
+
 }

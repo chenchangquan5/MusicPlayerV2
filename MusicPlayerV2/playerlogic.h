@@ -16,6 +16,7 @@
 #include "downloadsongs.h"
 
 
+
 class PlayerLogic : public QObject
 {
     Q_OBJECT
@@ -53,6 +54,7 @@ public:
 signals:
     void signalLoginSuccessToMainWidget(void);
     void signalLogoutToMainWidget(void);
+
 
 private slots:
     void slotCurrentIndexChanged(int position);
@@ -107,6 +109,7 @@ private:
     //初始化下载界面
     DownloadSongs *m_downloadSongs;
     void initDownloadSongs(void);
+
 };
 
 #endif // PLAYERLOGIC_H

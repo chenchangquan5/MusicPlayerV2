@@ -15,6 +15,7 @@ PlayerLogic::PlayerLogic(QObject *parent) : QObject(parent)
     initLogin();
     initRegister();
     initDownloadSongs();
+
 }
 
 PlayerLogic::~PlayerLogic()
@@ -184,6 +185,7 @@ void PlayerLogic::initRegister()
 void PlayerLogic::initDownloadSongs()
 {
     m_downloadSongs = new DownloadSongs;
+
 }
 
 void PlayerLogic::slotDurationChanged(qint64 duration)
@@ -417,7 +419,7 @@ void PlayerLogic::slotCloseWidget(void)
 
 void PlayerLogic::slotShowTimingSettings(void)
 {
-    m_settingsDialog->exec();
+
 }
 
 //定时停止播放
@@ -438,25 +440,6 @@ void PlayerLogic::slotShowLogin(void)
     //设置为模态对话框
     m_login->setWindowModality(Qt::ApplicationModal);
     m_login->show();
-}
-
-//显示注册界面
-void PlayerLogic::slotShowRegister(void)
-{
-    m_register->setWindowModality(Qt::ApplicationModal);
-    m_register->show();
-}
-
-//显示下载界面
-void PlayerLogic::slotShowDownloadSongs(void)
-{
-    m_downloadSongs->setWindowModality(Qt::ApplicationModal);
-    m_downloadSongs->show();
-}
-
-void PlayerLogic::slotLoginSuccess(void)
-{
-    emit signalLoginSuccessToMainWidget();
 }
 
 void PlayerLogic::slotLogout(void)
