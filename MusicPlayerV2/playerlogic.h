@@ -14,7 +14,6 @@
 #include "login.h"
 #include "register.h"
 #include "downloadsongs.h"
-#include "client.h"
 
 
 class PlayerLogic : public QObject
@@ -54,7 +53,7 @@ public:
 signals:
     void signalLoginSuccessToMainWidget(void);
     void signalLogoutToMainWidget(void);
-    void signalSendMsg(void);
+
 
 private slots:
     void slotCurrentIndexChanged(int position);
@@ -110,9 +109,7 @@ private:
     DownloadSongs *m_downloadSongs;
     void initDownloadSongs(void);
 
-    //
-    Client *m_client;
-    void initClient(void);
+
 };
 
 #endif // PLAYERLOGIC_H

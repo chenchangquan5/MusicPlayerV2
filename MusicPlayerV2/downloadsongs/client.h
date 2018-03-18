@@ -18,8 +18,7 @@ signals:
 
 public slots:
     void slotSendMsg(void);
-    void slotSendSongsNamePosition(int index);
-    void slotSendDisconnect(void);
+
 
 public:
     explicit Client(QWidget *parent = 0);

@@ -15,7 +15,7 @@ PlayerLogic::PlayerLogic(QObject *parent) : QObject(parent)
     initLogin();
     initRegister();
     initDownloadSongs();
-    initClient();
+
 }
 
 PlayerLogic::~PlayerLogic()
@@ -185,20 +185,7 @@ void PlayerLogic::initRegister()
 void PlayerLogic::initDownloadSongs()
 {
     m_downloadSongs = new DownloadSongs;
-}
 
-void PlayerLogic::initClient()
-{
-    m_client = new Client;
-
-    connect(this,SIGNAL(signalSendMsg()),
-            m_client,SLOT(slotSendMsg()));
-    connect(m_downloadSongs,SIGNAL(signalSendSongsNamePosition(int)),
-            m_client,SLOT(slotSendSongsNamePosition(int)));
-    connect(m_client,SIGNAL(signalSendSongNameToWidget(QString)),
-           m_downloadSongs,SLOT(slotSendSongNameToWidget(QString)));
-    connect(m_downloadSongs,SIGNAL(signalSendDisconnect()),
-            m_client,SLOT(slotSendDisconnect()));
 }
 
 void PlayerLogic::slotDurationChanged(qint64 duration)
@@ -432,7 +419,7 @@ void PlayerLogic::slotCloseWidget(void)
 
 void PlayerLogic::slotShowTimingSettings(void)
 {
-    m_timingSettings->exec();
+
 }
 
 //定时停止播放
@@ -455,25 +442,6 @@ void PlayerLogic::slotShowLogin(void)
     m_login->show();
 }
 
-//显示注册界面
-void PlayerLogic::slotShowRegister(void)
-{
-    m_register->setWindowModality(Qt::ApplicationModal);
-    m_register->show();
-}
-
-//显示下载界面
-void PlayerLogic::slotShowDownloadSongs(void)
-{
-    emit signalSendMsg();
-    m_downloadSongs->setWindowModality(Qt::ApplicationModal);
-    m_downloadSongs->show();
-}
-
-void PlayerLogic::slotLoginSuccess(void)
-{
-    emit signalLoginSuccessToMainWidget();
-}
 
 void PlayerLogic::slotLogout(void)
 {

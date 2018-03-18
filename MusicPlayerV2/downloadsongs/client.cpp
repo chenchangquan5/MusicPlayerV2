@@ -41,13 +41,7 @@ void Client::readyToRead(void)
     if(m_tcpSocket->bytesAvailable() < m_tcpBlockSize)
         return;
 
-    QByteArray message;
-    in >> message;
 
-    m_tcpBlockSize = 0;
-
-    //匹配msg中含有"@$@$@"的连续字符
-    QString msg = message;
     if(msg.contains("@$@$@",Qt::CaseSensitive))
     {
         msg.remove("@$@$@");
@@ -55,6 +49,7 @@ void Client::readyToRead(void)
         emit signalSendSongNameToWidget(msg);
     }else
     {
+
         if(m_isStart)
         {
             m_isStart = false;
@@ -94,17 +89,6 @@ void Client::analysisHeadDataPack(const QByteArray &message)
 
 void Client::analysisFileDataPack(const QByteArray &message)
 {
-    this->show();
-
-    //接收处理文件
-    qint64 len = m_file.write(message);
-    m_recvSize += len;
-//    qDebug() << "m_recvSize: " << m_recvSize;
-
-    ui->progressBar->setValue(m_recvSize);
-
-    qDebug() << "m_rec" << m_recvSize;
-    qDebug() << "m_file" << m_fileSize;
 
     if(m_recvSize == m_fileSize) //接收完毕
     {
@@ -116,27 +100,13 @@ void Client::analysisFileDataPack(const QByteArray &message)
         m_tcpSocket->disconnectFromHost();
         m_tcpSocket->close();
 
-        this->close();
     }
 }
 
 void Client::slotSendMsg(void)
 {
     m_tcpSocket->connectToHost("localhost", 5555);
-    sendMsgToHost("receive songs list");
-}
 
-void Client::slotSendSongsNamePosition(int index)
-{
-    QString num = "%^%*%" + QString::number(index);
-
-    sendMsgToHost(num.toLatin1());
-}
-
-void Client::slotSendDisconnect(void)
-{
-    m_tcpSocket->disconnectFromHost();
-    m_tcpSocket->close();
 }
 
 void Client::sendMsgToHost(const QByteArray &message)
