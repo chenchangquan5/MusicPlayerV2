@@ -19,6 +19,7 @@ signals:
 public slots:
     void slotSendMsg(void);
 
+
 public:
     explicit Client(QWidget *parent = 0);
     ~Client();

@@ -16,7 +16,6 @@ Client::Client(QWidget *parent) :
     m_tcpBlockSize = 0;
     m_tcpSocket = new QTcpSocket(this);
 
-
     connect(m_tcpSocket, SIGNAL(readyRead()),
             this, SLOT(readyToRead()));
 }
@@ -43,11 +42,6 @@ void Client::readyToRead(void)
         return;
 
 
-    QByteArray message;
-    in >> message;
-
-    QString msg = message;
-
     if(msg.contains("@$@$@",Qt::CaseSensitive))
     {
         msg.remove("@$@$@");
@@ -55,7 +49,7 @@ void Client::readyToRead(void)
         emit signalSendSongNameToWidget(msg);
     }else
     {
-        m_tcpBlockSize = 0;
+
         if(m_isStart)
         {
             m_isStart = false;
@@ -95,12 +89,7 @@ void Client::analysisHeadDataPack(const QByteArray &message)
 
 void Client::analysisFileDataPack(const QByteArray &message)
 {
-    //接收处理文件
-    qint64 len = m_file.write(message);
-    m_recvSize += len;
-    qDebug() << "m_recvSize: " << m_recvSize;
 
-    ui->progressBar->setValue(m_recvSize);
     if(m_recvSize == m_fileSize) //接收完毕
     {
         m_file.close();
@@ -110,13 +99,14 @@ void Client::analysisFileDataPack(const QByteArray &message)
         sendMsgToHost("file write done");
         m_tcpSocket->disconnectFromHost();
         m_tcpSocket->close();
+
     }
 }
 
 void Client::slotSendMsg(void)
 {
     m_tcpSocket->connectToHost("localhost", 5555);
-    sendMsgToHost("123");
+
 }
 
 void Client::sendMsgToHost(const QByteArray &message)

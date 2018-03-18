@@ -442,6 +442,7 @@ void PlayerLogic::slotShowLogin(void)
     m_login->show();
 }
 
+
 void PlayerLogic::slotLogout(void)
 {
     emit signalLogoutToMainWidget();

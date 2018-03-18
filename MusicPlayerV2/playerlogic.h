@@ -16,7 +16,6 @@
 #include "downloadsongs.h"
 
 
-
 class PlayerLogic : public QObject
 {
     Q_OBJECT
@@ -109,6 +108,7 @@ private:
     //初始化下载界面
     DownloadSongs *m_downloadSongs;
     void initDownloadSongs(void);
+
 
 };
 

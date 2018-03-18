@@ -3,6 +3,7 @@
 
 #include <QWidget>
 
+
 namespace Ui {
 class DownloadSongs;
 }
@@ -10,6 +11,7 @@ class DownloadSongs;
 class DownloadSongs : public QWidget
 {
     Q_OBJECT
+
 
 
 public:
